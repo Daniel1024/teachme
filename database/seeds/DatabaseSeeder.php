@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UsersTableSeeder::class);
         $this->call(TicketTableSeeder::class);
+        $this->call(TicketVoteTableSeeder::class);
+        $this->call(TicketCommentTableSeeder::class);
     }
 
     private function truncateTables(array $tables)

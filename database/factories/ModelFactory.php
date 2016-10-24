@@ -12,6 +12,8 @@
 */
 
 use TeachMe\Entities\Ticket;
+use TeachMe\Entities\TicketComment;
+use TeachMe\Entities\TicketVote;
 use TeachMe\Entities\User;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
@@ -29,6 +31,24 @@ $factory->define(Ticket::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->sentence,
         'status' => $faker->randomElement(['open', 'open', 'closed']),
+        //'user_id' => rand(1, 50),
+    ];
+});
+
+$factory->define(TicketVote::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => rand(1, 50),
+        'ticket_id' => 1,
+        //'user_id' => rand(1, 50),
+    ];
+});
+
+$factory->define(TicketComment::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => rand(1, 50),
+        'ticket_id' => 1,
+        'comment'   => $faker->paragraph,
+        'link'      => $faker->randomElement(['','',$faker->url])
         //'user_id' => rand(1, 50),
     ];
 });

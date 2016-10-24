@@ -11,6 +11,7 @@
 |
 */
 
+use TeachMe\Entities\Ticket;
 use TeachMe\Entities\User;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
@@ -21,5 +22,13 @@ $factory->define(User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(Ticket::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->sentence,
+        'status' => $faker->randomElement(['open', 'open', 'closed']),
+        //'user_id' => rand(1, 50),
     ];
 });

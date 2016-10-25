@@ -4,13 +4,14 @@ namespace TeachMe\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use TeachMe\Entities\Ticket;
 use TeachMe\Http\Requests;
 
 class TicketsController extends Controller
 {
     public function latest()
     {
-        dd('latest');
+        return view('tickets.list');
     }
 
     public function popular()
@@ -28,9 +29,9 @@ class TicketsController extends Controller
         dd('closed');
     }
 
-    public function details($id)
+    public function details(Ticket $ticket)
     {
-        dd("details: $id");
+        return view('tickets.details', compact('ticket'));
     }
 
 }

@@ -11,6 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'TicketsController@latest')
+    ->name('tickets.latest');
+
+Route::get('populares', 'TicketsController@popular')
+    ->name('tickets.popular');
+
+Route::get('pendientes', 'TicketsController@open')
+    ->name('tickets.open');
+
+Route::get('tutoriales', 'TicketsController@closed')
+    ->name('tickets.closed');
+
+Route::get('solicitud/{id}', 'TicketsController@details')
+    ->name('tickets.details');
+
+Auth::routes();

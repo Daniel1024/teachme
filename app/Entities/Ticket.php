@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
 
+    public function getOpenAttribute()
+    {
+        return $this->status == 'open';
+    }
     public function ticketVotes()
     {
         return $this->hasMany(TicketVote::class);

@@ -52,9 +52,4 @@ class TicketsController extends Controller
         return view('tickets.details', compact('ticket'));
     }
 
-    public function create()
-    {
-        return '[Formulario de solicitus]';
-    }
-
 }

@@ -13,14 +13,8 @@ class TicketCommentTableSeeder extends Seeder
      */
     public function run()
     {
-        $tickets = Ticket::all();
+        
+        factory(TicketComment::class)->times(250)->create();
 
-        $comments = factory(TicketComment::class)->times(250)->make();
-
-        foreach ($comments as $comment) {
-            $ticket = $tickets->random();
-
-            $ticket->ticketVotes()->save($comment);
-        }
     }
 }

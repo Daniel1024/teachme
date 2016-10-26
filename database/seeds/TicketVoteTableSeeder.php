@@ -14,14 +14,6 @@ class TicketVoteTableSeeder extends Seeder
      */
     public function run()
     {
-        $tickets = Ticket::all();
-
-        $votes = factory(TicketVote::class)->times(250)->make();
-
-        foreach ($votes as $vote) {
-            $ticket = $tickets->random();
-
-            $ticket->ticketVotes()->save($vote);
-        }
+        factory(TicketVote::class)->times(250)->create();
     }
 }

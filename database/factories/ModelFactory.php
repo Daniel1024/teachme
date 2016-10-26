@@ -37,16 +37,16 @@ $factory->define(Ticket::class, function (Faker\Generator $faker) {
 
 $factory->define(TicketVote::class, function (Faker\Generator $faker) {
     return [
-        'user_id' => rand(1, 50),
-        'ticket_id' => 1,
+        'user_id'   => rand(1, 50),
+        'ticket_id' => rand(1, 50),
         //'user_id' => rand(1, 50),
     ];
 });
 
 $factory->define(TicketComment::class, function (Faker\Generator $faker) {
     return [
-        'user_id' => rand(1, 50),
-        'ticket_id' => 1,
+        'user_id'   => rand(1, 50),
+        'ticket_id' => rand(1, 50),
         'comment'   => $faker->paragraph,
         'link'      => $faker->randomElement(['','',$faker->url])
         //'user_id' => rand(1, 50),

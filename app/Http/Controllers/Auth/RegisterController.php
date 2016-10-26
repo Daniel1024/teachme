@@ -2,7 +2,7 @@
 
 namespace TeachMe\Http\Controllers\Auth;
 
-use TeachMe\User;
+use TeachMe\Entities\User;
 use Validator;
 use TeachMe\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo;
 
     /**
      * Create a new controller instance.
@@ -37,6 +37,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->redirectTo = route('tickets.latest');
     }
 
     /**

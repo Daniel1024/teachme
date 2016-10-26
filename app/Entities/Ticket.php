@@ -11,12 +11,18 @@ class Ticket extends Model
     {
         return $this->status == 'open';
     }
-    public function ticketVotes()
+
+    public function voters()
     {
-        return $this->hasMany(TicketVote::class);
+        return $this->belongsToMany(User::class, 'ticket_votes');
     }
 
-    public function user()
+    public function comments()
+    {
+        return $this->hasMany(TicketComment::class);
+    }
+
+    public function author()
     {
         return $this->belongsTo(User::class);
     }

@@ -23,7 +23,7 @@ Route::get('pendientes', 'TicketsController@open')
 Route::get('tutoriales', 'TicketsController@closed')
     ->name('tickets.closed');
 
-Route::get('solicitud/{ticket}', 'TicketsController@details')
+Route::get('solicitud/{id}', 'TicketsController@details')
     ->name('tickets.details');
 
 Auth::routes();

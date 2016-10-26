@@ -5,6 +5,7 @@ namespace TeachMe\Http\Controllers;
 use Illuminate\Http\Request;
 
 use TeachMe\Entities\Ticket;
+use TeachMe\Entities\TicketComment;
 use TeachMe\Http\Requests;
 
 class TicketsController extends Controller
@@ -37,8 +38,17 @@ class TicketsController extends Controller
         return view('tickets.list', compact('tickets'));
     }
 
-    public function details(Ticket $ticket)
+    public function details($id)
     {
+        /*$comments = TicketComment::select('comment', 'user_id', 'created_at')
+            ->with(['user' => function ($q) {
+                $q->select('id', 'name');
+            }])
+            ->where('ticket_id', $ticket->id)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(20);*/
+        //dd($comments[0]->toArray());
+        $ticket = Ticket::findOrFail($id);
         return view('tickets.details', compact('ticket'));
     }
 

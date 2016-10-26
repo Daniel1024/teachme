@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function voted()
+    {
+        return $this->belongsToMany(Ticket::class, 'ticket_votes');
+    }
 }

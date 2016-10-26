@@ -27,3 +27,7 @@ Route::get('solicitud/{id}', 'TicketsController@details')
     ->name('tickets.details');
 
 Auth::routes();
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('solicitar', 'TicketsController@create')->name('tickets.create');
+});

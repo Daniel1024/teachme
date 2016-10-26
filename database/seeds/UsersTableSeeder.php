@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
     private function createAdmin()
     {
         factory(User::class)->create([
-            'name' => 'Daniel Lopez',
+            'name' => 'Daniel López',
             'email' => 'daniel@admin.com',
         ]);
     }

@@ -8,6 +8,11 @@
                     {{ $ticket->title }}
                     @include('tickets.partials.status', compact('ticket'))
                 </h2>
+                @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
                 <p class="date-t">
                     <span class="glyphicon glyphicon-time"></span> {{ $ticket->created_at->format('d/m/Y h:ia') }}
                     - {{ $ticket->author->name }}
@@ -37,18 +42,27 @@
                 @endif
                 <h3>Nuevo Comentario</h3>
 
-
-                <form method="POST" action="http://blog.app/comentar/5" accept-charset="UTF-8"><input name="_token" type="hidden" value="VBIv3EWDAIQuLRW0cGwNQ4OsDKoRhnK2fAEF6UbQ">
-                    <div class="form-group">
+                {!! Form::open(['route' => ['comments.submit', $ticket->id], 'method' => 'POST']) !!}
+                    <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
                         <label for="comment">Comentarios:</label>
-                        <textarea rows="4" class="form-control" name="comment" cols="50" id="comment"></textarea>
+                        <textarea rows="4" class="form-control" name="comment" cols="50" id="comment">{{ old('comment') }}</textarea>
+                        @if ($errors->has('comment'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('comment') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('link') ? ' has-error' : '' }}">
                         <label for="link">Enlace:</label>
-                        <input class="form-control" name="link" type="text" id="link">
+                        <input class="form-control" name="link" type="text" id="link" value="{{ old('link') }}">
+                        @if ($errors->has('link'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('link') }}</strong>
+                            </span>
+                        @endif
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar comentario</button>
-                </form>
+                {!! Form::close() !!}
 
                 <h3>Comentarios ({{ $ticket->comments->count() }})</h3>
 
@@ -56,6 +70,13 @@
                     <div class="well well-sm">
                         <p><strong>{{ $comment->user->name }}</strong></p>
                         <p>{{ $comment->comment }}</p>
+                        @if($comment->link)
+                            <p>
+                                <a href="{{ $comment->link }}" target="_blank" rel="nofollow">
+                                    {{ $comment->link }}
+                                </a>
+                            </p>
+                        @endif
                         <p class="date-t">
                             <span class="glyphicon glyphicon-time"></span>
                             {{ $comment->created_at->format('d/m/Y h:ia') }}

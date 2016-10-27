@@ -43,5 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('votes.destroy');
 
     //Comentar
+    Route::post('comentar/{id}', 'CommentsController@submit')
+        ->name('comments.submit');
 
 });

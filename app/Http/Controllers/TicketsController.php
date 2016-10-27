@@ -74,7 +74,7 @@ class TicketsController extends Controller
         $ticket->user_id = auth()->user()->id;
         $ticket->save();
 */
-        return redirect()->route('tickets.details', $ticket->id)->with('message', 'Ticket creado correctamente');
+        return redirect()->route('tickets.details', $ticket->id)->with('success', 'Ticket creado correctamente');
     }
 
 }

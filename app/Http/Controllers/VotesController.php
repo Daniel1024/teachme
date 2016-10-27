@@ -11,7 +11,7 @@ class VotesController extends Controller
     {
         $ticket = Ticket::findOrFail($id);
         if (auth()->user()->vote($ticket)) {
-            return back()->with('sucess', 'Voto agregado correctamente');
+            return back()->with('success', 'Voto agregado correctamente');
         } else {
             return back()->withErrors('Ocurrio un error, vuelve a intentarlo');
         }
@@ -21,7 +21,7 @@ class VotesController extends Controller
     {
         $ticket = Ticket::findOrFail($id);
         if (auth()->user()->unvote($ticket)) {
-            return back()->with('sucess', 'Voto quitado correctamente');
+            return back()->with('success', 'Voto quitado correctamente');
         } else {
             return back()->withErrors('Ocurrio un error, vuelve a intentarlo');
         }

@@ -105,12 +105,14 @@ return [
     */
 
     'attributes' => [
-        'aula'=>'Elija el Aula',
-        'materia'=>'Elija la Asignatura',
-        'quimestre'=>'Elija el Quimestre',
-        'parcial'=>'Elija el Parcial',
-        'aula_virtual'=>'Elija el Aula Virtual creada',
-        'title' => 'Título'
+        'aula'          =>'Elija el Aula',
+        'materia'       =>'Elija la Asignatura',
+        'quimestre'     =>'Elija el Quimestre',
+        'parcial'       =>'Elija el Parcial',
+        'aula_virtual'  =>'Elija el Aula Virtual creada',
+        'title'         => 'título',
+        'comment'       => 'comentarios',
+        'link'          => 'enlace',
     ],
 
 ];

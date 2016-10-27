@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
+    protected $fillable = ['title', 'status'];
 
     public function getOpenAttribute()
     {
@@ -24,7 +25,7 @@ class Ticket extends Model
 
     public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

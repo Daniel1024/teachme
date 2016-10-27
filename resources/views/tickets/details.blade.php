@@ -21,12 +21,17 @@
                     @endforeach
                 </p>
 
-                <form method="POST" action="http://blog.app/votar/5" accept-charset="UTF-8"><input name="_token" type="hidden" value="VBIv3EWDAIQuLRW0cGwNQ4OsDKoRhnK2fAEF6UbQ">
-                    <!--button type="submit" class="btn btn-primary">Votar</button-->
+                {!! Form::open(['route' => ['votes.submit', $ticket->id], 'method' => 'POST']) !!}
                     <button type="submit" class="btn btn-primary">
                         <span class="glyphicon glyphicon-thumbs-up"></span> Votar
                     </button>
-                </form>
+                {!! Form::close() !!}
+
+                {!! Form::open(['route' => ['votes.destroy', $ticket->id], 'method' => 'DELETE']) !!}
+                    <button type="submit" style="background-color: #d9534f;border-color: #d43f3a;" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-thumbs-down"></span> Quitar voto
+                    </button>
+                {!! Form::close() !!}
 
                 <h3>Nuevo Comentario</h3>
 

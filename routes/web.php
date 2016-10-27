@@ -29,5 +29,19 @@ Route::get('solicitud/{id}', 'TicketsController@details')
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('solicitar', 'TicketsController@create')->name('tickets.create');
+
+    //crear solicitudes
+    Route::get('solicitar', 'TicketsController@create')
+        ->name('tickets.create');
+    Route::post('solicitar', 'TicketsController@store')
+        ->name('tickets.store');
+
+    //votar
+    Route::post('votar/{id}', 'VotesController@submit')
+        ->name('votes.submit');
+    Route::delete('votar/{id}', 'VotesController@destroy')
+        ->name('votes.destroy');
+
+    //Comentar
+
 });

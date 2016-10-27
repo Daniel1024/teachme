@@ -5,15 +5,25 @@ namespace TeachMe\Http\Controllers;
 use Illuminate\Http\Request;
 
 use TeachMe\Entities\Ticket;
-use TeachMe\Entities\TicketComment;
-use TeachMe\Http\Requests;
+use TeachMe\Repositories\TicketRepository;
 
 class TicketsController extends Controller
 {
+
+    /**
+     * @var TicketRepository
+     */
+    private $ticketRepository;
+
+    public function __construct(TicketRepository $ticketRepository)
+    {
+        $this->ticketRepository = $ticketRepository;
+    }
+
     public function latest()
     {
-        $tickets = Ticket::orderBy('created_at', 'DESC')
-            ->paginate(20);
+        $tickets = $this->ticketRepository->paginateLates();
+
         return view('tickets.list', compact('tickets'));
     }
 
@@ -24,31 +34,22 @@ class TicketsController extends Controller
 
     public function open()
     {
-        $tickets = Ticket::where('status', 'open')
-            ->orderBy('created_at', 'DESC')
-            ->paginate(20);
+        $tickets = $this->ticketRepository->paginateOpen();
+
         return view('tickets.list', compact('tickets'));
     }
 
     public function closed()
     {
-        $tickets = Ticket::where('status', 'closed')
-            ->orderBy('created_at', 'DESC')
-            ->paginate(20);
+        $tickets = $this->ticketRepository->paginateClosed();
+
         return view('tickets.list', compact('tickets'));
     }
 
     public function details($id)
     {
-        /*$comments = TicketComment::select('comment', 'user_id', 'created_at')
-            ->with(['user' => function ($q) {
-                $q->select('id', 'name');
-            }])
-            ->where('ticket_id', $ticket->id)
-            ->orderBy('created_at', 'DESC')
-            ->paginate(20);*/
-        //dd($comments[0]->toArray());
-        $ticket = Ticket::findOrFail($id);
+        $ticket = $this->ticketRepository->findOrFail($id);
+        //dd($ticket);
         return view('tickets.details', compact('ticket'));
     }
 

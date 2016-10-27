@@ -23,12 +23,12 @@ Route::get('pendientes', 'TicketsController@open')
 Route::get('tutoriales', 'TicketsController@closed')
     ->name('tickets.closed');
 
-Route::get('solicitud/{id}', 'TicketsController@details')
-    ->name('tickets.details');
-
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('solicitud/{id}', 'TicketsController@details')
+        ->name('tickets.details');
 
     //crear solicitudes
     Route::get('solicitar', 'TicketsController@create')

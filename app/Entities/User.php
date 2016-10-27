@@ -35,7 +35,8 @@ class User extends Authenticatable
 
     public function voted()
     {
-        return $this->belongsToMany(Ticket::class, 'ticket_votes');
+        return $this->belongsToMany(Ticket::class, 'ticket_votes')
+            ->withTimestamps();
     }
 
     public function hasVoted(Ticket $ticket)

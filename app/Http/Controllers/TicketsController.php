@@ -59,7 +59,22 @@ class TicketsController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $this->validate($request, [
+            'title' => 'required|max:120'
+        ]);
+
+        $ticket = auth()->user()->tickets()->create([
+            'title'     => $request->title,
+            'status'    => 'open'
+        ]);
+/*
+        $ticket = new Ticket();
+        $ticket->title = $request->title;
+        $ticket->status = 'open';
+        $ticket->user_id = auth()->user()->id;
+        $ticket->save();
+*/
+        return redirect()->route('tickets.details', $ticket->id)->with('message', 'Ticket creado correctamente');
     }
 
 }

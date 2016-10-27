@@ -109,7 +109,8 @@ return [
         'materia'=>'Elija la Asignatura',
         'quimestre'=>'Elija el Quimestre',
         'parcial'=>'Elija el Parcial',
-        'aula_virtual'=>'Elija el Aula Virtual creada'
+        'aula_virtual'=>'Elija el Aula Virtual creada',
+        'title' => 'Título'
     ],
 
 ];

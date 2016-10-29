@@ -49,20 +49,4 @@ class User extends Authenticatable
         */
     }
 
-    public function vote(Ticket $ticket)
-    {
-        if ($this->hasVoted($ticket)) return false;
-
-        $this->voted()->attach($ticket);
-        return true;
-    }
-
-    public function unvote(Ticket $ticket)
-    {
-        if ( ! $this->hasVoted($ticket)) return false;
-
-        $this->voted()->detach($ticket);
-        return true;
-    }
-
 }

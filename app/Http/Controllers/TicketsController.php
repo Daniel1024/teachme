@@ -48,7 +48,7 @@ class TicketsController extends Controller
 
     public function details($id)
     {
-        $ticket = $this->ticketRepository->findOrFail($id);
+        $ticket = $this->ticketRepository->findOrFail($id, 'comments.user');
         //dd($ticket);
         return view('tickets.details', compact('ticket'));
     }
@@ -64,17 +64,9 @@ class TicketsController extends Controller
             'title' => 'required|max:120'
         ]);
 
-        $ticket = auth()->user()->tickets()->create([
-            'title'     => $request->title,
-            'status'    => 'open'
-        ]);
-/*
-        $ticket = new Ticket();
-        $ticket->title = $request->title;
-        $ticket->status = 'open';
-        $ticket->user_id = auth()->user()->id;
-        $ticket->save();
-*/
+        $ticket = $this->ticketRepository
+            ->openNew(auth()->user(), $request->title);
+
         return redirect()->route('tickets.details', $ticket->id)->with('success', 'Ticket creado correctamente');
     }
 

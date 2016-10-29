@@ -3,9 +3,15 @@
 namespace TeachMe\Repositories;
 
 use TeachMe\Entities\Ticket;
+use TeachMe\Entities\User;
 
-class TicketRepository
+class TicketRepository extends BaseRepository
 {
+
+    public function getModel()
+    {
+        return new Ticket();
+    }
 
     protected function selectTicketsList($status = null, $order = 'DESC', $paginate = 20)
     {
@@ -13,11 +19,12 @@ class TicketRepository
             $order = 'DESC';
         }
 
-        $query = Ticket::selectRaw(
-            'tickets.*, ' .
-            '( SELECT COUNT(*) FROM ticket_comments WHERE ticket_comments.ticket_id = tickets.id ) as num_comments, ' .
-            '( SELECT COUNT(*) FROM ticket_votes WHERE ticket_votes.ticket_id = tickets.id ) as num_votes'
-        )->with('author')->orderBy('created_at', $order);
+        $query = $this->newQuery()
+            ->selectRaw(
+                'tickets.*, ' .
+                '( SELECT COUNT(*) FROM ticket_comments WHERE ticket_comments.ticket_id = tickets.id ) as num_comments, ' .
+                '( SELECT COUNT(*) FROM ticket_votes WHERE ticket_votes.ticket_id = tickets.id ) as num_votes'
+            )->with('author')->orderBy('created_at', $order);
 
         if ( ! is_null($status)) {
             $query->where('status', $status);
@@ -45,9 +52,12 @@ class TicketRepository
         return $this->selectTicketsList('closed');
     }
 
-    public function findOrFail($id)
+    public function openNew(User $user, String $title)
     {
-        return Ticket::with('comments.user')->findOrFail($id);
+        return $user->tickets()->create([
+            'title'     => $title,
+            'status'    => 'open'
+        ]);
     }
 
 }

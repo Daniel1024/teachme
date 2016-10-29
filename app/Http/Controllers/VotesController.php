@@ -2,15 +2,28 @@
 
 namespace TeachMe\Http\Controllers;
 
-use Illuminate\Http\Request;
-use TeachMe\Entities\Ticket;
+use TeachMe\Repositories\TicketRepository;
+use TeachMe\Repositories\VoteRepository;
 
 class VotesController extends Controller
 {
+    private $ticketRepository;
+    private $votesRepository;
+
+    public function __construct(
+        TicketRepository $ticketRepository,
+        VoteRepository $votesRepository
+    )
+    {
+        $this->ticketRepository = $ticketRepository;
+        $this->votesRepository = $votesRepository;
+    }
+
     public function submit($id)
     {
-        $ticket = Ticket::findOrFail($id);
-        if (auth()->user()->vote($ticket)) {
+        $ticket = $this->ticketRepository->findOrFail($id);
+
+        if ($this->votesRepository->vote(user(), $ticket)) {
             return back()->with('success', 'Voto agregado correctamente');
         } else {
             return back()->withErrors('Ocurrio un error, vuelve a intentarlo');
@@ -19,8 +32,10 @@ class VotesController extends Controller
 
     public function destroy($id)
     {
-        $ticket = Ticket::findOrFail($id);
-        if (auth()->user()->unvote($ticket)) {
+        $ticket = $this->ticketRepository
+                    ->findOrFail($id);
+
+        if ($this->votesRepository->unvote(user(), $ticket)) {
             return back()->with('success', 'Voto quitado correctamente');
         } else {
             return back()->withErrors('Ocurrio un error, vuelve a intentarlo');

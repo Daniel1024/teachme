@@ -3,11 +3,23 @@
 namespace TeachMe\Http\Controllers;
 
 use Illuminate\Http\Request;
-use TeachMe\Entities\Ticket;
-use TeachMe\Entities\TicketComment;
+use TeachMe\Repositories\CommentRepository;
+use TeachMe\Repositories\TicketRepository;
 
 class CommentsController extends Controller
 {
+    private $commentRepository;
+    private $ticketRepository;
+
+    public function __construct(
+        TicketRepository $ticketRepository,
+        CommentRepository $commentRepository
+    )
+    {
+        $this->commentRepository = $commentRepository;
+        $this->ticketRepository = $ticketRepository;
+    }
+
     public function submit(Request $request, $id)
     {
         $this->validate($request, [
@@ -15,11 +27,17 @@ class CommentsController extends Controller
             'link'      => 'url'
         ]);
 
-        $comment = new TicketComment($request->only(['comment', 'link']));
-        $comment->user_id = Auth()->user()->id;
+        $ticket = $this->ticketRepository->findOrFail($id);
 
-        $ticket = Ticket::findOrFail($id);
-        $ticket->comments()->save($comment);
+        $this->commentRepository
+            ->create(
+                $ticket,
+                auth()->user(),
+                $request->get('comment'),
+                $request->get('link')
+            );
+
+
 
         return back()->with('success', 'Tu comentario fue guradado exitosamente');
     }

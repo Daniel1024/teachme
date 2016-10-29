@@ -1,17 +1,19 @@
-<div data-id="{{ $ticket->id }}" class="well well-sm request">
+<div data-id="{{ $ticket->id }}" class="well well-sm ticket">
     <h4 class="list-title">
         {{ $ticket->title }}
         @include('tickets.partials.status', compact('ticket'))
     </h4>
-    <p>
-        {{--
-        <a href="#" class="btn btn-primary btn-vote" title="Votar por este tutorial">
-            <span class="glyphicon glyphicon-thumbs-up"></span> Votar
-        </a>
-        <a href="#" class="btn btn-hight btn-unvote">
-            <span class="glyphicon glyphicon-thumbs-down"></span> No votar
-        </a>
---}}
+
+        @if(Auth::check())
+        <p>
+            <a href="#" {!! Html::classes(['btn btn-primary btn-vote', 'hide' => user()->hasVoted($ticket)]) !!} title="Votar por este tutorial">
+                <span class="glyphicon glyphicon-thumbs-up"></span> Votar
+            </a>
+            <a href="#" {!! Html::classes(['btn btn-hight btn-unvote', 'hide' => !user()->hasVoted($ticket)]) !!} title="Quitar el voto a este tutorial">
+                <span class="glyphicon glyphicon-thumbs-down"></span> Quitar votar
+            </a>
+        </p>
+        @endif
         <a href="{{ route('tickets.details', $ticket) }}">
             <span class="votes-count">{{ $ticket->num_votes }} votos</span>
             - <span class="comments-count">{{ $ticket->num_comments }} comentarios</span>.

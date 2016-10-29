@@ -2,6 +2,7 @@
 
 namespace TeachMe\Http\Controllers;
 
+use Illuminate\Http\Request;
 use TeachMe\Repositories\TicketRepository;
 use TeachMe\Repositories\VoteRepository;
 
@@ -19,26 +20,38 @@ class VotesController extends Controller
         $this->votesRepository = $votesRepository;
     }
 
-    public function submit($id)
+    public function submit($id, Request $request)
     {
         $ticket = $this->ticketRepository->findOrFail($id);
 
-        if ($this->votesRepository->vote(user(), $ticket)) {
-            return back()->with('success', 'Voto agregado correctamente');
+        $success = $this->votesRepository->vote(user(), $ticket);
+
+        if ($request->ajax()) {
+            return response()->json(compact('success'));
         } else {
-            return back()->withErrors('Ocurrio un error, vuelve a intentarlo');
+            if ($success) {
+                return back()->with('success', 'Voto agregado correctamente');
+            } else {
+                return back()->withErrors('Ocurrio un error, vuelve a intentarlo');
+            }
         }
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $ticket = $this->ticketRepository
                     ->findOrFail($id);
 
-        if ($this->votesRepository->unvote(user(), $ticket)) {
-            return back()->with('success', 'Voto quitado correctamente');
+        $success = $this->votesRepository->unvote(user(), $ticket);
+
+        if ($request->ajax()) {
+            return response()->json(compact('success'));
         } else {
-            return back()->withErrors('Ocurrio un error, vuelve a intentarlo');
+            if ($success) {
+                return back()->with('success', 'Voto quitado correctamente');
+            } else {
+                return back()->withErrors('Ocurrio un error, vuelve a intentarlo');
+            }
         }
     }
 }

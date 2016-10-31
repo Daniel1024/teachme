@@ -1,26 +1,11 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the body of the page. From here, you may begin adding components to
- * the application, or feel free to tweak this setup for your needs.
- */
-/*
-Vue.component('example', require('./components/Example.vue'));
-
-const app = new Vue({
-    el: '#app'
-});
-*/
+import Alert from './alert'
 
 $(function () {
+
+    var alert = new Alert('#notifications');
+
     $('.btn-vote').click(function (e) {
         e.preventDefault();
 
@@ -35,9 +20,13 @@ $(function () {
         $.post(action, form.serialize(), function (response) {
             button.toggleClass('hide');
             ticket.find('.btn-unvote').toggleClass('hide');
-            console.log(response);
+            var voteCount = ticket.find('.votes-count');
+            var votos = parseInt(voteCount.text().split(' ')[0]);
+            votos++;
+            voteCount.text(votos == 1 ? '1 voto' : votos + ' votos');
+            alert.success('¡Gracias por tu voto¡');
         }).fail(function (response) {
-            console.log(response);
+            alert.error('Ocurrió un error :(');
         });
 
     });

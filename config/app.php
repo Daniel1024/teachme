@@ -184,6 +184,8 @@ return [
 
         TeachMe\Providers\HtmlServiceProvider::class,
 
+        TeachMe\Providers\ViewServiceProvider::class,
+
     ],
 
     /*

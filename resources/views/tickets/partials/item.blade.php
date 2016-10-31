@@ -10,7 +10,7 @@
                 <span class="glyphicon glyphicon-thumbs-up"></span> Votar
             </a>
             <a href="#" {!! Html::classes(['btn btn-hight btn-unvote', 'hide' => !user()->hasVoted($ticket)]) !!} title="Quitar el voto a este tutorial">
-                <span class="glyphicon glyphicon-thumbs-down"></span> Quitar votar
+                <span class="glyphicon glyphicon-thumbs-down"></span> Quitar voto
             </a>
         </p>
         @endif
